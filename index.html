@@ -1,14 +1,70 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>FaceBook Login</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <script src="js/cookie.js"></script>
 </head>
+
 <body>
-  <h1>Facebook Login front-end example</h1>
-  
+  <script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId: '114314212557003',
+        autoLogAppEvents: true,
+        xfbml: true,
+        version: 'v2.10'
+      });
+      FB.AppEvents.logPageView();
+    };
+
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) {
+        return;
+      }
+      js = d.createElement(s);
+      js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  </script>
+  <div class="container">
+    <h1>Facebook Login front-end example</h1>
+
+    <button id="btn-facebook-login" class="btn btn-primary btn-block" onclick="fbLogin()">Facebook Login</button>
+  </div>
+  <script>
+    var hasToken = cookieHasToken();
+    if (!hasToken) {
+      document.getElementById('btn-facebook-login').style.display = 'block';
+    } else {
+      document.getElementById('btn-facebook-login').style.display = 'none';
+    }
+
+    function fbLogin() {
+      FB.getLoginStatus(function(response){
+        console.log(response)
+      });
+    }
+
+
+    function cookieHasToken() {
+        var token = getCookie('token');
+        if (token == undefined || token == null || token == '') {
+          return false;
+        }
+        return true;
+    }
+
+
+  </script>
+
 
 </body>
+
 </html>
