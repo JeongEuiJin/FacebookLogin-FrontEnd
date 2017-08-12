@@ -48,10 +48,19 @@
 
     function fbLogin() {
       FB.getLoginStatus(function(response){
-        console.log(response)
+        if(response.status == 'connected') {
+          backendFacebookLogin(response.authResponse);
+        }
+        else{
+          FB.login(function(response){
+            backendFacebookLogin(response.authResponse);
+          },{scope: 'public_profile'});
+        }
       });
     }
-
+    function backendFacebookLogin(authResponse){
+      console.log(authResponse);
+    }
 
     function cookieHasToken() {
         var token = getCookie('token');
